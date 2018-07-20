@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8">
+
+		<title>Ajax fácil com JavaScript</title>
+		
+		<!-- bootstrap - link cdn -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<script type="text/Javascript">
+			var httpRequest;
+			function fazerRequisicao(url,destino){
+				document.getElementById('div_conteudo').innerHTML='<center><img src="loader.gif"></center>';
+				//Vamos instanciar o objeto XMLHttpRequest conforme o navegador
+				if(window.XMLHttpRequest){//Implementacao em brownser mais atuais
+                   httpRequest= new XMLHttpRequest();//Instaciando meu objeto
+				}else if(window.ActiveXObjetct){
+					try{
+						httpRequest=new ActiveXObjetct("Msxm12.XMLTTP");
+					}catch(e){
+						try{
+							httpRequest=new ActiveXObjetct("Microsoft.XMLHTTP");
+						}catch(e){
+							alert("Impossivel instanciar o objeto xmlhttprequest para este navegador/versão");
+						}
+					}
+				}
+				if(!httpRequest){
+					alert("Erro ao tentar criar uma instancia do XMLHttpRequest");
+					return false;//Para finalizar a chamada da função
+				}
+				httpRequest.onreadystatechange=situacaoRequisicao;
+				httpRequest.open('GET',url);
+				httpRequest.send();
+			}
+			function situacaoRequisicao(){
+				if(httpRequest.readyState==4){//Requisicao foi entregue
+					if(httpRequest.status==200){//status que foi enviado com sucesso
+                            document.getElementById('div_conteudo').innerHTML=httpRequest.responseText;
+
+					}
+				}
+
+			}
+		</script>
+	
+	</head>
+
+	<body>
+
+		<!-- Static navbar -->
+	    <nav class="navbar navbar-default navbar-static-top">
+	      <div class="container">
+	        <div class="navbar-header">
+	        	<h3>Requisições síncronas e assíncronas</h3>
+	        </div>
+	      </div>
+	    </nav>
+
+
+	    <div class="container">
+
+	    	<div class="row">
+	    		<div class="col-md-4 center"></div>
+	    		<div class="col-md-4 center">
+	    		<a href="#" class="btn btn-primary" onclick="fazerRequisicao('pagina_1_conteudo.html','div_conteudo')">Página 1</a><!--Estamos passando os parametros para nossa funcao de requisica e o id da div onde eu quero que apareça o conteudo-->
+	    		<a href="#" class="btn btn-primary" onclick="fazerRequisicao('pagina_2_conteudo.html','div_conteudo')">Página 2</a>
+	    		<a href="#" class="btn btn-primary" onclick="fazerRequisicao('pagina_3_conteudo.html','div_conteudo')">Página 3</a>
+	    		</div>
+	    		<div class="col-md-4 center"></div>
+	    	</div>
+	    	
+	    	<br />
+	    	<div class="row">
+		    	<div class="col-md-1"></div>
+
+		    	<div class="col-md-10" id="div_conteudo">
+		    		
+		    	</div>
+		    		
+				<div class="col-md-1"></div>
+			</div>
+
+		</div>	
+	</body>
+</html>

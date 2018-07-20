@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8">
+
+		<title>Ajax fácil com JQuery</title>
+		
+		<!-- bootstrap - link cdn -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="sweetalert-master/dist/sweetalert.css">
+		
+		<script src="sweetalert-master/dist/sweetalert.min.js"></script>
+		
+   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+		<script type="text/Javascript">
+           
+
+			$(document).ready(function(){
+              $('.btn_carrega_conteudo').click(function () {
+                var carrega_url=this.id;
+                carrega_url+='_conteudo.html';
+                
+                $.ajax({
+                	url: carrega_url,
+
+                    //Função executada antes do carregamento
+                    beforeSend: function(){
+                      $('#div_conteudo').html('<center><img id="loader" src="loader.gif"/></center>');
+                	},
+
+
+                	//Função carregada
+                	success:function(data){//success verifica se a requisicao foi um sucesso, assim dispara uma função 
+                		$('#div_conteudo').html(data);
+
+                	},
+                	
+                	//Função pronta e completa
+                	complete:function(){
+                        mensagem();
+                       
+                	}
+                	//data
+                });
+              });
+            
+			});
+            
+        function mensagem() {
+			swal( 'Carregado!',
+                  'You clicked the button!',
+                  'success'
+)};
+		</script>
+		
+	
+	</head>
+
+	<body>
+
+		<!-- Static navbar -->
+	    <nav class="navbar navbar-default navbar-static-top">
+	      <div class="container">
+	        <div class="navbar-header">
+	        	<h3>Requisições síncronas e assíncronas</h3>
+	        </div>
+	      </div>
+	    </nav>
+
+
+	    <div class="container">
+
+	    	<div class="row">
+	    		<div class="col-md-4 center"></div>
+	    		<div class="col-md-4 center">
+	    		<a href="#" class="btn btn-primary btn_carrega_conteudo" id="pagina_1">Página 1</a><!--Estamos passando os parametros para nossa funcao de requisica e o id da div onde eu quero que apareça o conteudo-->
+	    		<a href="#" class="btn btn-primary btn_carrega_conteudo" id="pagina_2">Página 2</a>
+	    		<a href="#" class="btn btn-primary btn_carrega_conteudo" id="pagina_3">Pagina 3</a>
+	    		</div>
+	    		<div class="col-md-4 center"></div>
+	    	</div>
+	    	
+	    	<br />
+	    	<div class="row">
+		    	<div class="col-md-1"></div>
+
+		    	<div class="col-md-10" id="div_conteudo">
+		    	
+		    		
+		    	</div>
+		    		
+				<div class="col-md-1"></div>
+			</div>
+			
+
+		</div>	
+	</body>
+</html>
